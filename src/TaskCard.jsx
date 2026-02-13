@@ -1,10 +1,35 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './TaskCard.css'
 
 function TaskCard({ task, onExpand }) {
   const [position, setPosition] = useState({ x: task.x || 0, y: task.y || 0 })
   const [isDragging, setIsDragging] = useState(false)
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (isDragging) {
+        setPosition({
+          x: e.clientX - dragStart.x,
+          y: e.clientY - dragStart.y
+        })
+      }
+    }
+
+    const handleMouseUp = () => {
+      setIsDragging(false)
+    }
+
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove)
+      window.addEventListener('mouseup', handleMouseUp)
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [isDragging, dragStart])
 
   const handleMouseDown = (e) => {
     // Don't start dragging if clicking the expand button
@@ -19,26 +44,6 @@ function TaskCard({ task, onExpand }) {
     })
   }
 
-  const handleMouseMove = (e) => {
-    if (isDragging) {
-      setPosition({
-        x: e.clientX - dragStart.x,
-        y: e.clientY - dragStart.y
-      })
-    }
-  }
-
-  const handleMouseUp = () => {
-    setIsDragging(false)
-  }
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault()
-      onExpand()
-    }
-  }
-
   return (
     <div
       className={`task-card ${isDragging ? 'dragging' : ''}`}
@@ -47,16 +52,12 @@ function TaskCard({ task, onExpand }) {
         top: `${position.y}px`,
       }}
       onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
     >
       <div className="task-card-header">
         <h4 className="task-name">{task.name}</h4>
         <button 
           className="expand-button" 
           onClick={onExpand}
-          onKeyDown={handleKeyDown}
           aria-label="Expand task details"
         >
           <svg 
