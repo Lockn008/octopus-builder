@@ -54,12 +54,18 @@
   margin-top: 2rem;
 }
 
+.feature-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
 .feature-card {
   padding: 2rem;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.05);
   transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
 }
 
 .feature-card:hover {

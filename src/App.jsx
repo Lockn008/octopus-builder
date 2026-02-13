@@ -1,6 +1,8 @@
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import './App.css'
+import ProjectManagement from './ProjectManagement.jsx'
 
-function App() {
+function Home() {
   return (
     <div className="app">
       <header className="app-header">
@@ -15,10 +17,12 @@ function App() {
         </div>
         
         <div className="features-grid">
-          <div className="feature-card">
-            <h3>📋 Project Management</h3>
-            <p>Track and manage construction projects from start to finish</p>
-          </div>
+          <Link to="/project-management" className="feature-card-link">
+            <div className="feature-card">
+              <h3>📋 Project Management</h3>
+              <p>Track and manage construction projects from start to finish</p>
+            </div>
+          </Link>
           
           <div className="feature-card">
             <h3>👷 Contractor Management</h3>
@@ -41,6 +45,17 @@ function App() {
         <p>Built with React + Vite</p>
       </footer>
     </div>
+  )
+}
+
+function App() {
+  return (
+    <Router basename="/octopus-builder">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/project-management" element={<ProjectManagement />} />
+      </Routes>
+    </Router>
   )
 }
 
