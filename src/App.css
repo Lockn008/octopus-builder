@@ -1,0 +1,96 @@
+.app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  color: white;
+}
+
+.app-header h1 {
+  font-size: 3rem;
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.app-main {
+  margin-bottom: 3rem;
+}
+
+.welcome-section {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.welcome-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #646cff;
+}
+
+.welcome-section p {
+  font-size: 1.1rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.feature-card {
+  padding: 2rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: #646cff;
+}
+
+.feature-card p {
+  color: #666;
+  line-height: 1.6;
+}
+
+.app-footer {
+  text-align: center;
+  padding: 2rem;
+  color: #888;
+  border-top: 1px solid #e0e0e0;
+}
+
+@media (max-width: 768px) {
+  .app-header h1 {
+    font-size: 2rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
