@@ -2,6 +2,8 @@
 
 A web-based ERP system developed for construction projects and contractors.
 
+🔗 **Live Demo**: [https://lockn008.github.io/octopus-builder/](https://lockn008.github.io/octopus-builder/)
+
 ## Tech Stack
 
 - **React 19** - Modern UI library
@@ -57,6 +59,20 @@ Run ESLint to check code quality:
 ```bash
 npm run lint
 ```
+
+## Deployment
+
+This site is automatically deployed to GitHub Pages when changes are pushed to the `main` branch.
+
+- **Live URL**: [https://lockn008.github.io/octopus-builder/](https://lockn008.github.io/octopus-builder/)
+- **Deployment**: Automated via GitHub Actions (see `.github/workflows/deploy.yml`)
+
+### Manual Deployment
+
+To deploy manually:
+1. Ensure you have pushed your changes to the `main` branch
+2. The GitHub Actions workflow will automatically build and deploy the site
+3. Alternatively, trigger the workflow manually from the Actions tab in GitHub
 
 ## Project Structure
 
