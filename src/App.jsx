@@ -49,6 +49,7 @@ function Home() {
 }
 
 function App() {
+  // Using basename to match the base path configured in vite.config.js
   return (
     <Router basename="/octopus-builder">
       <Routes>

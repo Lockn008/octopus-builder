@@ -4,6 +4,13 @@ import './ProjectManagement.css'
 function ProjectManagement() {
   const [selectedView, setSelectedView] = useState('flowchart')
 
+  const handleKeyDown = (e, view) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      setSelectedView(view)
+    }
+  }
+
   return (
     <div className="project-management">
       <div className="sidebar">
@@ -12,12 +19,18 @@ function ProjectManagement() {
           <li 
             className={selectedView === 'flowchart' ? 'active' : ''}
             onClick={() => setSelectedView('flowchart')}
+            onKeyDown={(e) => handleKeyDown(e, 'flowchart')}
+            role="button"
+            tabIndex={0}
           >
             Flowchart
           </li>
           <li 
             className={selectedView === 'timeline' ? 'active' : ''}
             onClick={() => setSelectedView('timeline')}
+            onKeyDown={(e) => handleKeyDown(e, 'timeline')}
+            role="button"
+            tabIndex={0}
           >
             Timeline
           </li>
