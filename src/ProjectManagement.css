@@ -1,6 +1,7 @@
 .project-management {
   display: flex;
   height: 100vh;
+  width: 100%;
   overflow: hidden;
 }
 
@@ -50,6 +51,8 @@
   display: flex;
   flex-direction: column;
   overflow: auto;
+  width: 100%;
+  min-width: 0;
   /* Graph paper background */
   background-color: #ffffff;
   background-image: 
@@ -69,21 +72,9 @@
     -1px -1px;
 }
 
-.pm-header {
-  background-color: rgba(255, 255, 255, 0.95);
-  padding: 2rem;
-  border-bottom: 2px solid #dee2e6;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.pm-header h1 {
-  margin: 0;
-  font-size: 2rem;
-  color: #495057;
-}
-
 .content-area {
   padding: 2rem;
+  flex: 1;
 }
 
 .view-section {

@@ -14,7 +14,7 @@ function ProjectManagement() {
   return (
     <div className="project-management">
       <div className="sidebar">
-        <h3>View</h3>
+        <h3>Project Management</h3>
         <ul className="view-options">
           <li 
             className={selectedView === 'flowchart' ? 'active' : ''}
@@ -38,10 +38,6 @@ function ProjectManagement() {
       </div>
       
       <div className="main-content">
-        <header className="pm-header">
-          <h1>📋 Project Management</h1>
-        </header>
-        
         <div className="content-area">
           {selectedView === 'flowchart' && (
             <div className="view-section">
