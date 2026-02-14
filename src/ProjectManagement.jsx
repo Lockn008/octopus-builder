@@ -1,8 +1,50 @@
 import { useState } from 'react'
 import './ProjectManagement.css'
+import TaskCard from './TaskCard.jsx'
+import Modal from './Modal.jsx'
 
 function ProjectManagement() {
   const [selectedView, setSelectedView] = useState('flowchart')
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  // Dummy task data
+  const dummyTasks = [
+    {
+      id: 1,
+      name: 'Foundation Work',
+      laborHours: 120,
+      startDate: '2026-02-15',
+      completionDate: '2026-02-28',
+      x: 50,
+      y: 50
+    },
+    {
+      id: 2,
+      name: 'Framing',
+      laborHours: 200,
+      startDate: '2026-03-01',
+      completionDate: '2026-03-20',
+      x: 350,
+      y: 50
+    },
+    {
+      id: 3,
+      name: 'Electrical Installation',
+      laborHours: 80,
+      startDate: '2026-03-15',
+      completionDate: '2026-03-25',
+      x: 50,
+      y: 250
+    }
+  ]
+
+  const handleExpandTask = () => {
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+  }
 
   const handleKeyDown = (e, view) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -40,9 +82,18 @@ function ProjectManagement() {
       <div className="main-content">
         <div className="content-area">
           {selectedView === 'flowchart' && (
-            <div className="view-section">
+            <div className="view-section flowchart-container">
               <h2>Flowchart View</h2>
-              <p>Flowchart visualization will be displayed here.</p>
+              <p>Drag the task cards to organize your workflow.</p>
+              <div className="flowchart-canvas">
+                {dummyTasks.map((task) => (
+                  <TaskCard 
+                    key={task.id}
+                    task={task}
+                    onExpand={handleExpandTask}
+                  />
+                ))}
+              </div>
             </div>
           )}
           
@@ -54,6 +105,11 @@ function ProjectManagement() {
           )}
         </div>
       </div>
+      
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <h3>Task Details</h3>
+        <p>Task details will be displayed here.</p>
+      </Modal>
     </div>
   )
 }

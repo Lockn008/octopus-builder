@@ -95,6 +95,19 @@
   line-height: 1.6;
 }
 
+.flowchart-container {
+  height: calc(100vh - 8rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.flowchart-canvas {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
 @media (max-width: 768px) {
   .project-management {
     flex-direction: column;
