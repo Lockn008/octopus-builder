@@ -1,0 +1,23 @@
+.prerequisite-arrows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transition: z-index 0s;
+}
+
+.arrow-group {
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.arrow-path {
+  transition: stroke 0.2s ease, stroke-width 0.2s ease;
+}
+
+.arrow-hover-area {
+  pointer-events: auto;
+  cursor: pointer;
+}
