@@ -158,6 +158,7 @@ function PrerequisiteArrows({ tasks }) {
         width: '100%', 
         height: '100%',
         pointerEvents: 'none',
+        // Dynamic z-index changes on hover to bring arrows above cards
         zIndex: hoveredArrow ? Z_INDEX_ARROWS_HOVERED : Z_INDEX_ARROWS_DEFAULT
       }}
     >
