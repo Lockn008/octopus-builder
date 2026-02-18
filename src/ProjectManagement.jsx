@@ -4,43 +4,14 @@ import TaskCard from './TaskCard.jsx'
 import Modal from './Modal.jsx'
 import TaskForm from './TaskForm.jsx'
 import PrerequisiteArrows from './PrerequisiteArrows.jsx'
+import Timeline from './Timeline.jsx'
+import useTaskData from './useTaskData.js'
 
 function ProjectManagement() {
   const [selectedView, setSelectedView] = useState('flowchart')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedTask, setSelectedTask] = useState(null)
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      name: 'Foundation Work',
-      laborHours: 120,
-      startDate: '2026-02-15',
-      completionDate: '2026-02-28',
-      prerequisites: [],
-      x: 50,
-      y: 50
-    },
-    {
-      id: 2,
-      name: 'Framing',
-      laborHours: 200,
-      startDate: '2026-03-01',
-      completionDate: '2026-03-20',
-      prerequisites: [1],
-      x: 350,
-      y: 50
-    },
-    {
-      id: 3,
-      name: 'Electrical Installation',
-      laborHours: 80,
-      startDate: '2026-03-15',
-      completionDate: '2026-03-25',
-      prerequisites: [2],
-      x: 50,
-      y: 250
-    }
-  ])
+  const { tasks, addTask, updateTask, updateTaskPosition } = useTaskData()
 
   const handleNewTask = () => {
     setSelectedTask(null)
@@ -60,24 +31,10 @@ function ProjectManagement() {
   const handleSubmitTask = (formData) => {
     if (selectedTask) {
       // Edit existing task
-      setTasks(prevTasks =>
-        prevTasks.map(task =>
-          task.id === selectedTask.id
-            ? { ...task, ...formData }
-            : task
-        )
-      )
+      updateTask(selectedTask.id, formData)
     } else {
       // Add new task
-      const maxId = tasks.length > 0 ? Math.max(...tasks.map(t => t.id)) : 0
-      const newTask = {
-        id: maxId + 1,
-        ...formData,
-        laborHours: Number(formData.laborHours),
-        x: 100,
-        y: 100
-      }
-      setTasks(prevTasks => [...prevTasks, newTask])
+      addTask(formData)
     }
     handleCloseModal()
   }
@@ -90,13 +47,7 @@ function ProjectManagement() {
   }
 
   const handleTaskPositionChange = (taskId, newPosition) => {
-    setTasks(prevTasks =>
-      prevTasks.map(task =>
-        task.id === taskId
-          ? { ...task, x: newPosition.x, y: newPosition.y }
-          : task
-      )
-    )
+    updateTaskPosition(taskId, newPosition)
   }
 
   return (
@@ -152,10 +103,7 @@ function ProjectManagement() {
           )}
           
           {selectedView === 'timeline' && (
-            <div className="view-section">
-              <h2>Timeline View</h2>
-              <p>Timeline visualization will be displayed here.</p>
-            </div>
+            <Timeline tasks={tasks} onTaskClick={handleExpandTask} />
           )}
         </div>
       </div>
