@@ -12,11 +12,14 @@ function TaskForm({ task, onSubmit, onCancel, availableTasks = [] }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [showDropdown, setShowDropdown] = useState(false)
 
-  // Filter tasks that can be prerequisites (exclude current task)
+  // Filter tasks that can be prerequisites (exclude current task and already selected)
   const filteredTasks = useMemo(() => {
     return availableTasks.filter(t => {
       // Exclude current task being edited
       if (task && t.id === task.id) return false
+      
+      // Exclude already selected prerequisites
+      if (formData.prerequisites.includes(t.id)) return false
       
       // Filter by search term
       if (searchTerm) {
@@ -28,7 +31,7 @@ function TaskForm({ task, onSubmit, onCancel, availableTasks = [] }) {
       }
       return true
     })
-  }, [availableTasks, task, searchTerm])
+  }, [availableTasks, task, searchTerm, formData.prerequisites])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -155,17 +158,20 @@ function TaskForm({ task, onSubmit, onCancel, availableTasks = [] }) {
               }}
             />
             {showDropdown && filteredTasks.length > 0 && (
-              <div className="prerequisite-dropdown">
+              <div className="prerequisite-dropdown" role="listbox">
                 {filteredTasks.map(t => (
-                  <div
+                  <button
                     key={t.id}
+                    type="button"
                     className="prerequisite-option"
                     onClick={() => handleAddPrerequisite(t)}
                     onMouseDown={(e) => e.preventDefault()}
+                    role="option"
+                    aria-selected="false"
                   >
                     <span className="option-id">ID: {t.id}</span>
                     <span className="option-name">{t.name}</span>
-                  </div>
+                  </button>
                 ))}
               </div>
             )}
