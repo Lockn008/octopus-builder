@@ -75,47 +75,42 @@ function PrerequisiteArrows({ tasks }) {
   const generatePath = (fromPoint, toPoint) => {
     const cornerRadius = 8
     
-    // Simple two-segment path: horizontal then vertical, or vertical then horizontal
+    // Path only uses cardinal directions (up, down, left, right) with corners
     const dx = toPoint.x - fromPoint.x
     const dy = toPoint.y - fromPoint.y
     
     let path = `M ${fromPoint.x} ${fromPoint.y} `
     
-    if (Math.abs(dx) > cornerRadius * 2 || Math.abs(dy) > cornerRadius * 2) {
+    // If both dx and dy are non-zero, we need to make a corner
+    if (Math.abs(dx) > 0.1 && Math.abs(dy) > 0.1) {
       // Choose path based on which direction is larger
       if (Math.abs(dx) >= Math.abs(dy)) {
-        // Go horizontal first, then vertical
-        const midX = fromPoint.x + dx / 2
-        
+        // Go horizontal all the way to target x, then vertical to target y
         if (Math.abs(dy) > cornerRadius * 2) {
-          // Has vertical component with corner
-          path += `L ${midX - Math.sign(dx) * cornerRadius} ${fromPoint.y} `
-          path += `Q ${midX} ${fromPoint.y} ${midX} ${fromPoint.y + Math.sign(dy) * cornerRadius} `
-          path += `L ${midX} ${toPoint.y - Math.sign(dy) * cornerRadius} `
-          path += `Q ${midX} ${toPoint.y} ${midX + Math.sign(dx) * cornerRadius} ${toPoint.y} `
+          // Has room for corner
+          path += `L ${toPoint.x - Math.sign(dx) * cornerRadius} ${fromPoint.y} `
+          path += `Q ${toPoint.x} ${fromPoint.y} ${toPoint.x} ${fromPoint.y + Math.sign(dy) * cornerRadius} `
           path += `L ${toPoint.x} ${toPoint.y}`
         } else {
-          // Only horizontal movement
+          // Too small for corner, use sharp corner
+          path += `L ${toPoint.x} ${fromPoint.y} `
           path += `L ${toPoint.x} ${toPoint.y}`
         }
       } else {
-        // Go vertical first, then horizontal
-        const midY = fromPoint.y + dy / 2
-        
+        // Go vertical all the way to target y, then horizontal to target x
         if (Math.abs(dx) > cornerRadius * 2) {
-          // Has horizontal component with corner
-          path += `L ${fromPoint.x} ${midY - Math.sign(dy) * cornerRadius} `
-          path += `Q ${fromPoint.x} ${midY} ${fromPoint.x + Math.sign(dx) * cornerRadius} ${midY} `
-          path += `L ${toPoint.x - Math.sign(dx) * cornerRadius} ${midY} `
-          path += `Q ${toPoint.x} ${midY} ${toPoint.x} ${midY + Math.sign(dy) * cornerRadius} `
+          // Has room for corner
+          path += `L ${fromPoint.x} ${toPoint.y - Math.sign(dy) * cornerRadius} `
+          path += `Q ${fromPoint.x} ${toPoint.y} ${fromPoint.x + Math.sign(dx) * cornerRadius} ${toPoint.y} `
           path += `L ${toPoint.x} ${toPoint.y}`
         } else {
-          // Only vertical movement
+          // Too small for corner, use sharp corner
+          path += `L ${fromPoint.x} ${toPoint.y} `
           path += `L ${toPoint.x} ${toPoint.y}`
         }
       }
     } else {
-      // Direct connection (too small for corners)
+      // Only horizontal or only vertical movement
       path += `L ${toPoint.x} ${toPoint.y}`
     }
     
