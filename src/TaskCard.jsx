@@ -1,18 +1,21 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './TaskCard.css'
 
-function TaskCard({ task, onExpand }) {
-  const [position, setPosition] = useState({ x: task.x || 0, y: task.y || 0 })
+function TaskCard({ task, onExpand, onPositionChange }) {
   const [isDragging, setIsDragging] = useState(false)
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (isDragging) {
-        setPosition({
+        const newPosition = {
           x: e.clientX - dragStart.x,
           y: e.clientY - dragStart.y
-        })
+        }
+        // Notify parent of position change for real-time arrow updates
+        if (onPositionChange) {
+          onPositionChange(task.id, newPosition)
+        }
       }
     }
 
@@ -29,7 +32,7 @@ function TaskCard({ task, onExpand }) {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseup', handleMouseUp)
     }
-  }, [isDragging, dragStart])
+  }, [isDragging, dragStart, task.id, onPositionChange])
 
   const handleMouseDown = (e) => {
     // Don't start dragging if clicking the expand button
@@ -39,8 +42,8 @@ function TaskCard({ task, onExpand }) {
     
     setIsDragging(true)
     setDragStart({
-      x: e.clientX - position.x,
-      y: e.clientY - position.y
+      x: e.clientX - task.x,
+      y: e.clientY - task.y
     })
   }
 
@@ -48,8 +51,8 @@ function TaskCard({ task, onExpand }) {
     <div
       className={`task-card ${isDragging ? 'dragging' : ''}`}
       style={{
-        left: `${position.x}px`,
-        top: `${position.y}px`,
+        left: `${task.x}px`,
+        top: `${task.y}px`,
       }}
       onMouseDown={handleMouseDown}
     >

@@ -89,6 +89,16 @@ function ProjectManagement() {
     }
   }
 
+  const handleTaskPositionChange = (taskId, newPosition) => {
+    setTasks(prevTasks =>
+      prevTasks.map(task =>
+        task.id === taskId
+          ? { ...task, x: newPosition.x, y: newPosition.y }
+          : task
+      )
+    )
+  }
+
   return (
     <div className="project-management">
       <div className="sidebar">
@@ -135,6 +145,7 @@ function ProjectManagement() {
                   key={task.id}
                   task={task}
                   onExpand={() => handleExpandTask(task)}
+                  onPositionChange={handleTaskPositionChange}
                 />
               ))}
             </div>
