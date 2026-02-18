@@ -124,7 +124,7 @@ function TaskForm({ task, onSubmit, onCancel, availableTasks = [] }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="prerequisites">Pre-requisites</label>
+        <label htmlFor="prerequisites">Prerequisites</label>
         <div className="prerequisites-container">
           <div className="selected-prerequisites">
             {formData.prerequisites.map(prereqId => {
@@ -153,7 +153,8 @@ function TaskForm({ task, onSubmit, onCancel, availableTasks = [] }) {
               onChange={(e) => setSearchTerm(e.target.value)}
               onFocus={() => setShowDropdown(true)}
               onBlur={() => {
-                // Delay to allow click on dropdown items
+                // Delay hiding dropdown to allow button click events to fire
+                // onMouseDown prevents default on buttons to ensure click completes
                 setTimeout(() => setShowDropdown(false), 200)
               }}
             />
