@@ -122,26 +122,6 @@ function PrerequisiteArrows({ tasks }) {
     return path
   }
 
-  // Generate arrow marker at the end
-  const generateArrowHead = (fromPoint, toPoint) => {
-    const dx = toPoint.x - fromPoint.x
-    const dy = toPoint.y - fromPoint.y
-    const angle = Math.atan2(dy, dx)
-    const arrowSize = 8
-    
-    // Calculate arrow head points
-    const arrowPoint1 = {
-      x: toPoint.x - arrowSize * Math.cos(angle - Math.PI / 6),
-      y: toPoint.y - arrowSize * Math.sin(angle - Math.PI / 6)
-    }
-    const arrowPoint2 = {
-      x: toPoint.x - arrowSize * Math.cos(angle + Math.PI / 6),
-      y: toPoint.y - arrowSize * Math.sin(angle + Math.PI / 6)
-    }
-    
-    return `M ${arrowPoint1.x} ${arrowPoint1.y} L ${toPoint.x} ${toPoint.y} L ${arrowPoint2.x} ${arrowPoint2.y}`
-  }
-
   // Generate all arrows
   const arrows = []
   tasks.forEach(task => {
@@ -151,13 +131,11 @@ function PrerequisiteArrows({ tasks }) {
         if (prereqTask) {
           const { fromPoint, toPoint } = getConnectionPoint(prereqTask, task)
           const path = generatePath(fromPoint, toPoint)
-          const arrowHead = generateArrowHead(fromPoint, toPoint)
           const arrowId = `${prereqId}-${task.id}`
           
           arrows.push({
             id: arrowId,
             path,
-            arrowHead,
             fromTask: prereqTask,
             toTask: task
           })
