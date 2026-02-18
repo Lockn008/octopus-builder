@@ -15,6 +15,7 @@ function ProjectManagement() {
       laborHours: 120,
       startDate: '2026-02-15',
       completionDate: '2026-02-28',
+      prerequisites: [],
       x: 50,
       y: 50
     },
@@ -24,6 +25,7 @@ function ProjectManagement() {
       laborHours: 200,
       startDate: '2026-03-01',
       completionDate: '2026-03-20',
+      prerequisites: [],
       x: 350,
       y: 50
     },
@@ -33,6 +35,7 @@ function ProjectManagement() {
       laborHours: 80,
       startDate: '2026-03-15',
       completionDate: '2026-03-25',
+      prerequisites: [],
       x: 50,
       y: 250
     }
@@ -148,6 +151,7 @@ function ProjectManagement() {
         <TaskForm
           key={selectedTask?.id || 'new'}
           task={selectedTask}
+          availableTasks={tasks}
           onSubmit={handleSubmitTask}
           onCancel={handleCloseModal}
         />

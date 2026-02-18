@@ -94,3 +94,117 @@
   outline: 2px solid #667eea;
   outline-offset: 2px;
 }
+
+.prerequisites-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.selected-prerequisites {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-height: 2rem;
+}
+
+.prerequisite-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  background-color: #e7f0ff;
+  border: 1px solid #667eea;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  color: #334155;
+}
+
+.prerequisite-tag span {
+  line-height: 1.5;
+}
+
+.remove-prerequisite {
+  background: none;
+  border: none;
+  color: #667eea;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.remove-prerequisite:hover {
+  background-color: rgba(102, 126, 234, 0.2);
+}
+
+.prerequisite-search {
+  position: relative;
+}
+
+.prerequisite-search input {
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.prerequisite-search input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.prerequisite-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 0.25rem;
+  background: white;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.prerequisite-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.prerequisite-option:hover {
+  background-color: #f8f9fa;
+}
+
+.prerequisite-option:not(:last-child) {
+  border-bottom: 1px solid #e9ecef;
+}
+
+.option-id {
+  font-weight: 600;
+  color: #667eea;
+  font-size: 0.875rem;
+  min-width: 60px;
+}
+
+.option-name {
+  color: #495057;
+  font-size: 0.95rem;
+  flex: 1;
+}
