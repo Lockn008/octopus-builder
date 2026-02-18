@@ -1,19 +1,24 @@
 import { useState } from 'react'
 import './PrerequisiteArrows.css'
 
+// Z-index constants for arrow layering
+const Z_INDEX_ARROWS_DEFAULT = 0  // Behind task cards
+const Z_INDEX_ARROWS_HOVERED = 10  // In front of task cards
+
+// Task card dimensions (should match TaskCard component)
+// TODO: Consider moving to shared constants file
+const CARD_WIDTH = 286
+const CARD_HEIGHT = 164
+
 function PrerequisiteArrows({ tasks }) {
   const [hoveredArrow, setHoveredArrow] = useState(null)
 
   // Calculate connection point on the edge of a task card
   const getConnectionPoint = (task, targetTask) => {
-    // Task card dimensions (measured from actual rendering)
-    const cardWidth = 286
-    const cardHeight = 164
-    
-    const taskCenterX = task.x + cardWidth / 2
-    const taskCenterY = task.y + cardHeight / 2
-    const targetCenterX = targetTask.x + cardWidth / 2
-    const targetCenterY = targetTask.y + cardHeight / 2
+    const taskCenterX = task.x + CARD_WIDTH / 2
+    const taskCenterY = task.y + CARD_HEIGHT / 2
+    const targetCenterX = targetTask.x + CARD_WIDTH / 2
+    const targetCenterY = targetTask.y + CARD_HEIGHT / 2
     
     // Determine which edge to connect from based on relative position
     const dx = targetCenterX - taskCenterX
@@ -26,7 +31,7 @@ function PrerequisiteArrows({ tasks }) {
       // Horizontal connection preferred
       if (dx > 0) {
         // Target is to the right
-        fromPoint = { x: task.x + cardWidth, y: taskCenterY }
+        fromPoint = { x: task.x + CARD_WIDTH, y: taskCenterY }
       } else {
         // Target is to the left
         fromPoint = { x: task.x, y: taskCenterY }
@@ -35,7 +40,7 @@ function PrerequisiteArrows({ tasks }) {
       // Vertical connection preferred
       if (dy > 0) {
         // Target is below
-        fromPoint = { x: taskCenterX, y: task.y + cardHeight }
+        fromPoint = { x: taskCenterX, y: task.y + CARD_HEIGHT }
       } else {
         // Target is above
         fromPoint = { x: taskCenterX, y: task.y }
@@ -50,7 +55,7 @@ function PrerequisiteArrows({ tasks }) {
         toPoint = { x: targetTask.x, y: targetCenterY }
       } else {
         // Target is to the left
-        toPoint = { x: targetTask.x + cardWidth, y: targetCenterY }
+        toPoint = { x: targetTask.x + CARD_WIDTH, y: targetCenterY }
       }
     } else {
       // Vertical connection preferred
@@ -59,7 +64,7 @@ function PrerequisiteArrows({ tasks }) {
         toPoint = { x: targetCenterX, y: targetTask.y }
       } else {
         // Target is above
-        toPoint = { x: targetCenterX, y: targetTask.y + cardHeight }
+        toPoint = { x: targetCenterX, y: targetTask.y + CARD_HEIGHT }
       }
     }
     
@@ -175,7 +180,7 @@ function PrerequisiteArrows({ tasks }) {
         width: '100%', 
         height: '100%',
         pointerEvents: 'none',
-        zIndex: hoveredArrow ? 10 : 0
+        zIndex: hoveredArrow ? Z_INDEX_ARROWS_HOVERED : Z_INDEX_ARROWS_DEFAULT
       }}
     >
       <defs>
