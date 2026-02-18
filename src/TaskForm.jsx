@@ -48,6 +48,7 @@ function TaskForm({ task, onSubmit, onCancel }) {
           onChange={handleChange}
           required
           min="0"
+          step="0.1"
         />
       </div>
 
@@ -72,6 +73,7 @@ function TaskForm({ task, onSubmit, onCancel }) {
           value={formData.completionDate}
           onChange={handleChange}
           required
+          min={formData.startDate}
         />
       </div>
 

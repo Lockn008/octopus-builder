@@ -65,8 +65,9 @@ function ProjectManagement() {
       )
     } else {
       // Add new task
+      const maxId = tasks.length > 0 ? Math.max(...tasks.map(t => t.id)) : 0
       const newTask = {
-        id: Date.now(),
+        id: maxId + 1,
         ...formData,
         laborHours: Number(formData.laborHours),
         x: 100,
