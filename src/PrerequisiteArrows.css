@@ -1,0 +1,30 @@
+.prerequisite-arrows,
+.prerequisite-arrows-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.prerequisite-arrows {
+  z-index: 0; /* Behind task cards by default */
+}
+
+.prerequisite-arrows-hover {
+  z-index: 10; /* In front of task cards when hovered */
+}
+
+.arrow-group {
+  transition: opacity 0.2s ease;
+}
+
+.arrow-path {
+  transition: stroke 0.2s ease, stroke-width 0.2s ease;
+}
+
+.arrow-hover-area {
+  pointer-events: auto;
+  cursor: pointer;
+}

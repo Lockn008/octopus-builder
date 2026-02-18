@@ -3,6 +3,7 @@ import './ProjectManagement.css'
 import TaskCard from './TaskCard.jsx'
 import Modal from './Modal.jsx'
 import TaskForm from './TaskForm.jsx'
+import PrerequisiteArrows from './PrerequisiteArrows.jsx'
 
 function ProjectManagement() {
   const [selectedView, setSelectedView] = useState('flowchart')
@@ -25,7 +26,7 @@ function ProjectManagement() {
       laborHours: 200,
       startDate: '2026-03-01',
       completionDate: '2026-03-20',
-      prerequisites: [],
+      prerequisites: [1],
       x: 350,
       y: 50
     },
@@ -35,7 +36,7 @@ function ProjectManagement() {
       laborHours: 80,
       startDate: '2026-03-15',
       completionDate: '2026-03-25',
-      prerequisites: [],
+      prerequisites: [2],
       x: 50,
       y: 250
     }
@@ -128,6 +129,7 @@ function ProjectManagement() {
                 <div className="tooltip-icon">?</div>
                 <div className="tooltip-text">Drag the task cards to organize your workflow.</div>
               </div>
+              <PrerequisiteArrows tasks={tasks} />
               {tasks.map((task) => (
                 <TaskCard 
                   key={task.id}
