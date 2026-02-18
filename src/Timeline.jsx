@@ -1,6 +1,14 @@
 import { useMemo } from 'react'
 import './Timeline.css'
 
+// Constants
+const MS_PER_DAY = 1000 * 60 * 60 * 24
+
+// Helper function for date formatting
+const formatDateRange = (date) => {
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+}
+
 function Timeline({ tasks, onTaskClick }) {
   // Calculate timeline bounds
   const { minDate, maxDate, totalDays } = useMemo(() => {
@@ -18,7 +26,7 @@ function Timeline({ tasks, onTaskClick }) {
     
     // Calculate total days between min and max
     const diffTime = Math.abs(max - min)
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+    const diffDays = Math.ceil(diffTime / MS_PER_DAY)
 
     return { minDate: min, maxDate: max, totalDays: diffDays || 1 }
   }, [tasks])
@@ -29,8 +37,8 @@ function Timeline({ tasks, onTaskClick }) {
     const taskEnd = new Date(task.completionDate)
     
     // Calculate days from start
-    const startOffset = Math.abs(taskStart - minDate) / (1000 * 60 * 60 * 24)
-    const duration = Math.abs(taskEnd - taskStart) / (1000 * 60 * 60 * 24)
+    const startOffset = Math.abs(taskStart - minDate) / MS_PER_DAY
+    const duration = Math.abs(taskEnd - taskStart) / MS_PER_DAY
     
     // Convert to percentage
     const leftPercent = (startOffset / totalDays) * 100
@@ -49,7 +57,7 @@ function Timeline({ tasks, onTaskClick }) {
     currentDate.setDate(1) // Start from the first of the month
     
     while (currentDate <= maxDate) {
-      const offsetDays = Math.abs(currentDate - minDate) / (1000 * 60 * 60 * 24)
+      const offsetDays = Math.abs(currentDate - minDate) / MS_PER_DAY
       const position = (offsetDays / totalDays) * 100
       
       markers.push({
@@ -144,8 +152,8 @@ function Timeline({ tasks, onTaskClick }) {
                   <div className="task-block-content">
                     <span className="task-block-name">{task.name}</span>
                     <span className="task-block-dates">
-                      {new Date(task.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - 
-                      {new Date(task.completionDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                      {formatDateRange(new Date(task.startDate))} - 
+                      {formatDateRange(new Date(task.completionDate))}
                     </span>
                   </div>
                 </div>
