@@ -2,13 +2,13 @@ import { useState } from 'react'
 import './ProjectManagement.css'
 import TaskCard from './TaskCard.jsx'
 import Modal from './Modal.jsx'
+import TaskForm from './TaskForm.jsx'
 
 function ProjectManagement() {
   const [selectedView, setSelectedView] = useState('flowchart')
   const [isModalOpen, setIsModalOpen] = useState(false)
-
-  // Dummy task data
-  const dummyTasks = [
+  const [selectedTask, setSelectedTask] = useState(null)
+  const [tasks, setTasks] = useState([
     {
       id: 1,
       name: 'Foundation Work',
@@ -36,14 +36,45 @@ function ProjectManagement() {
       x: 50,
       y: 250
     }
-  ]
+  ])
 
-  const handleExpandTask = () => {
+  const handleNewTask = () => {
+    setSelectedTask(null)
+    setIsModalOpen(true)
+  }
+
+  const handleExpandTask = (task) => {
+    setSelectedTask(task)
     setIsModalOpen(true)
   }
 
   const handleCloseModal = () => {
     setIsModalOpen(false)
+    setSelectedTask(null)
+  }
+
+  const handleSubmitTask = (formData) => {
+    if (selectedTask) {
+      // Edit existing task
+      setTasks(prevTasks =>
+        prevTasks.map(task =>
+          task.id === selectedTask.id
+            ? { ...task, ...formData }
+            : task
+        )
+      )
+    } else {
+      // Add new task
+      const newTask = {
+        id: Date.now(),
+        ...formData,
+        laborHours: Number(formData.laborHours),
+        x: 100,
+        y: 100
+      }
+      setTasks(prevTasks => [...prevTasks, newTask])
+    }
+    handleCloseModal()
   }
 
   const handleKeyDown = (e, view) => {
@@ -77,6 +108,12 @@ function ProjectManagement() {
             Timeline
           </li>
         </ul>
+        <button 
+          className="new-task-button"
+          onClick={handleNewTask}
+        >
+          + New Task
+        </button>
       </div>
       
       <div className="main-content">
@@ -87,11 +124,11 @@ function ProjectManagement() {
                 <div className="tooltip-icon">?</div>
                 <div className="tooltip-text">Drag the task cards to organize your workflow.</div>
               </div>
-              {dummyTasks.map((task) => (
+              {tasks.map((task) => (
                 <TaskCard 
                   key={task.id}
                   task={task}
-                  onExpand={handleExpandTask}
+                  onExpand={() => handleExpandTask(task)}
                 />
               ))}
             </div>
@@ -107,8 +144,12 @@ function ProjectManagement() {
       </div>
       
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <h3>Task Details</h3>
-        <p>Task details will be displayed here.</p>
+        <TaskForm
+          key={selectedTask?.id || 'new'}
+          task={selectedTask}
+          onSubmit={handleSubmitTask}
+          onCancel={handleCloseModal}
+        />
       </Modal>
     </div>
   )
