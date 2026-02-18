@@ -82,18 +82,18 @@ function ProjectManagement() {
       <div className="main-content">
         <div className="content-area">
           {selectedView === 'flowchart' && (
-            <div className="view-section flowchart-container">
-              <h2>Flowchart View</h2>
-              <p>Drag the task cards to organize your workflow.</p>
-              <div className="flowchart-canvas">
-                {dummyTasks.map((task) => (
-                  <TaskCard 
-                    key={task.id}
-                    task={task}
-                    onExpand={handleExpandTask}
-                  />
-                ))}
+            <div className="flowchart-container">
+              <div className="tooltip-container">
+                <div className="tooltip-icon">?</div>
+                <div className="tooltip-text">Drag the task cards to organize your workflow.</div>
               </div>
+              {dummyTasks.map((task) => (
+                <TaskCard 
+                  key={task.id}
+                  task={task}
+                  onExpand={handleExpandTask}
+                />
+              ))}
             </div>
           )}
           
