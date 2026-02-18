@@ -166,40 +166,50 @@ function PrerequisiteArrows({ tasks }) {
   }
 
   return (
-    <>
-      {/* Normal arrows layer - behind task cards */}
-      <svg 
-        className="prerequisite-arrows" 
-        style={{ 
-          position: 'absolute', 
-          top: 0, 
-          left: 0, 
-          width: '100%', 
-          height: '100%',
-          pointerEvents: 'none',
-          zIndex: 0
-        }}
-      >
-        <defs>
-          <marker
-            id="arrowhead-normal"
-            markerWidth="10"
-            markerHeight="10"
-            refX="9"
-            refY="3"
-            orient="auto"
-            markerUnits="strokeWidth"
-          >
-            <path d="M0,0 L0,6 L9,3 z" fill="#667eea" />
-          </marker>
-        </defs>
-        {arrows.map(arrow => (
+    <svg 
+      className="prerequisite-arrows" 
+      style={{ 
+        position: 'absolute', 
+        top: 0, 
+        left: 0, 
+        width: '100%', 
+        height: '100%',
+        pointerEvents: 'none',
+        zIndex: hoveredArrow ? 10 : 0
+      }}
+    >
+      <defs>
+        <marker
+          id="arrowhead-normal"
+          markerWidth="10"
+          markerHeight="10"
+          refX="9"
+          refY="3"
+          orient="auto"
+          markerUnits="strokeWidth"
+        >
+          <path d="M0,0 L0,6 L9,3 z" fill="#667eea" />
+        </marker>
+        <marker
+          id="arrowhead-hover"
+          markerWidth="10"
+          markerHeight="10"
+          refX="9"
+          refY="3"
+          orient="auto"
+          markerUnits="strokeWidth"
+        >
+          <path d="M0,0 L0,6 L9,3 z" fill="#10b981" />
+        </marker>
+      </defs>
+      {arrows.map(arrow => {
+        const isHovered = hoveredArrow === arrow.id
+        return (
           <g 
             key={arrow.id}
-            className="arrow-group"
+            className={`arrow-group ${isHovered ? 'hovered' : ''}`}
             style={{ 
-              pointerEvents: 'auto',
-              display: hoveredArrow === arrow.id ? 'none' : 'block'
+              pointerEvents: 'auto'
             }}
             onMouseEnter={() => setHoveredArrow(arrow.id)}
             onMouseLeave={() => setHoveredArrow(null)}
@@ -207,10 +217,10 @@ function PrerequisiteArrows({ tasks }) {
             <path
               d={arrow.path}
               className="arrow-path"
-              stroke="#667eea"
-              strokeWidth="2"
+              stroke={isHovered ? '#10b981' : '#667eea'}
+              strokeWidth={isHovered ? '3' : '2'}
               fill="none"
-              markerEnd="url(#arrowhead-normal)"
+              markerEnd={isHovered ? 'url(#arrowhead-hover)' : 'url(#arrowhead-normal)'}
             />
             {/* Invisible wider path for easier hovering */}
             <path
@@ -221,64 +231,9 @@ function PrerequisiteArrows({ tasks }) {
               fill="none"
             />
           </g>
-        ))}
-      </svg>
-      
-      {/* Hovered arrow layer - in front of task cards */}
-      {hoveredArrow && (
-        <svg 
-          className="prerequisite-arrows-hover" 
-          style={{ 
-            position: 'absolute', 
-            top: 0, 
-            left: 0, 
-            width: '100%', 
-            height: '100%',
-            pointerEvents: 'none',
-            zIndex: 10
-          }}
-        >
-          <defs>
-            <marker
-              id="arrowhead-hover"
-              markerWidth="10"
-              markerHeight="10"
-              refX="9"
-              refY="3"
-              orient="auto"
-              markerUnits="strokeWidth"
-            >
-              <path d="M0,0 L0,6 L9,3 z" fill="#10b981" />
-            </marker>
-          </defs>
-          {arrows.filter(arrow => arrow.id === hoveredArrow).map(arrow => (
-            <g 
-              key={arrow.id}
-              style={{ 
-                pointerEvents: 'auto'
-              }}
-              onMouseEnter={() => setHoveredArrow(arrow.id)}
-              onMouseLeave={() => setHoveredArrow(null)}
-            >
-              <path
-                d={arrow.path}
-                stroke="#10b981"
-                strokeWidth="3"
-                fill="none"
-                markerEnd="url(#arrowhead-hover)"
-              />
-              {/* Invisible wider path for easier hovering */}
-              <path
-                d={arrow.path}
-                stroke="transparent"
-                strokeWidth="12"
-                fill="none"
-              />
-            </g>
-          ))}
-        </svg>
-      )}
-    </>
+        )
+      })}
+    </svg>
   )
 }
 
