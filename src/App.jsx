@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import './App.css'
 import ProjectManagement from './ProjectManagement.jsx'
+import LaborManagement from './LaborManagement.jsx'
 
 function Home() {
   return (
@@ -23,11 +24,13 @@ function Home() {
               <p>Track and manage construction projects from start to finish</p>
             </div>
           </Link>
-          
-          <div className="feature-card">
-            <h3>👷 Contractor Management</h3>
-            <p>Organize and coordinate with contractors and subcontractors</p>
-          </div>
+
+          <Link to="/labor-management" className="feature-card-link">
+            <div className="feature-card">
+              <h3>👷 Labor Management</h3>
+              <p>Manage work schedules, shifts, and labor resources</p>
+            </div>
+          </Link>
           
           <div className="feature-card">
             <h3>💰 Financial Tracking</h3>
@@ -55,6 +58,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/project-management" element={<ProjectManagement />} />
+        <Route path="/labor-management" element={<LaborManagement />} />
       </Routes>
     </Router>
   )
